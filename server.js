@@ -22,14 +22,15 @@ const pool = mysql.createPool({
 });
 
 // Test the connection
-pool.getConnection((err, connection) => {
-  if (err) {
+(async () => {
+  try {
+    const connection = await pool.getConnection();
+    console.log('Connected to MySQL database');
+    connection.release();
+  } catch (err) {
     console.error('Error connecting to database:', err);
-    return;
   }
-  console.log('Connected to MySQL database');
-  connection.release();
-});
+})();
 
 // Create database and tables if they don't exist
 // async function initializeDatabase() {
